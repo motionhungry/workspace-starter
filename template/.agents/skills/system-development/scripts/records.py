@@ -13,12 +13,12 @@ from tempfile import NamedTemporaryFile
 
 DEVELOPMENT = Path("90 System Development")
 RECORD_TYPES = {
-    "improvement": ("IMP", "10 Improvements", {"open", "in-progress", "validating", "closed"}),
+    "improvement": ("DEV", "10 Improvements", {"open", "in-progress", "validating", "closed"}),
     "decision": ("ADR", "20 Decisions", {"proposed", "accepted", "superseded", "rejected"}),
     "journal": ("JRN", "30 Journal", set()),
 }
 ARCHIVE = "99 Archive"
-FIRST_ID = "IMP-0001"
+FIRST_ID = f"{RECORD_TYPES['improvement'][0]}-0001"
 FIRST_PATH = DEVELOPMENT / RECORD_TYPES["improvement"][1] / f"{FIRST_ID}.md"
 CLOSURE_REASONS = {"resolved", "declined", "duplicate", "no-longer-relevant"}
 REQUIRED_SECTIONS = (
@@ -97,7 +97,7 @@ def validate_fields(fields, relative_path):
     if record_type == "improvement":
         allowed.add("parent")
         if "parent" in fields and not re.fullmatch(
-            r"\[\[IMP-[0-9]{4,}(?: - [^\[\]\r\n]+)?\]\]", fields["parent"]
+            rf"\[\[{prefix}-[0-9]{{4,}}(?: - [^\[\]\r\n]+)?\]\]", fields["parent"]
         ):
             raise RecordError("parent must be a quoted wikilink to an improvement.")
         if fields["status"] == "closed":

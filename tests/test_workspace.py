@@ -14,7 +14,7 @@ REPO = Path(__file__).resolve().parents[1]
 WORKSPACE = Path(".agents/skills/setup/scripts/workspace.py")
 RECORDS = Path(".agents/skills/system-development/scripts/records.py")
 SETTINGS = Path("90 System Development/workflow-settings.json")
-FIRST = Path("90 System Development/10 Improvements/IMP-0001.md")
+FIRST = Path("90 System Development/10 Improvements/DEV-0001.md")
 ADAPTER = Path(".claude/skills")
 UPDATE_SKILL = Path(".agents/skills/check-starter-updates/SKILL.md")
 
@@ -113,7 +113,7 @@ class WorkspaceTests(unittest.TestCase):
 
         draft = self.root / "Approved draft.md"
         draft.write_text(
-            "---\nid: IMP-0001\ntype: improvement\nstatus: open\n"
+            "---\nid: DEV-0001\ntype: improvement\nstatus: open\n"
             "created: 2026-11-19\nupdated: 2026-11-19\n---\n"
             "# Collect board meeting decisions\n"
             "## Problem and evidence\n Follow-ups are scattered.\n"

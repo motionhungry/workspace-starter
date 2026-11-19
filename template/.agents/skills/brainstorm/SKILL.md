@@ -1,15 +1,26 @@
 ---
 name: brainstorm
-description: Clarify a workspace's purpose and first useful capability during setup, or work through unresolved choices in a proposed system improvement.
+description: Brainstorm or stress-test a plan, decision, or idea through rounds of questions and recommendations. Use during workspace setup to clarify the purpose and first useful capability, or during system development to resolve design choices.
 ---
 
 # Brainstorm
 
-Read root `AGENTS.md`. Use the user's account of the work and read the smallest amount of local context needed to understand it. When joining an existing improvement, reuse its record and linked decisions.
+Interview the user until you reach a shared understanding. Map the decisions as a **design tree** where each decision opens the questions that depend on it. Start from the user's intended outcome and use only the local context needed to resolve the choices at hand.
 
-1. Start with the outcome the user wants and a representative example of the work. Ask a focused question about the next material uncertainty, such as who uses the system, what goes in or stays outside, or what currently causes rework.
-2. Define one capability the user can try on real work. Clarify its inputs, output, boundaries, authorization and an observable result. Present tradeoffs where the choice changes the design. Surface assumptions as such.
-3. Preview a single improvement with the problem, expected outcome, boundaries, proposed change, acceptance criteria and next step. Include the workspace's purpose in the first proposal so a future session can recover it. Ask once for approval of the content and saving the proposal. Wait for that approval.
-4. Hand the agreed proposal to [system development](../system-development/SKILL.md). During setup use its first-proposal path and give the operator the saved path. Record that the approval covers saving the proposal. Obtain a separate request or approval before implementing it.
+Work in rounds. Ask the whole **frontier**, the decisions whose prerequisites are settled. Number each question and give your recommended answer with a brief reason. Use this format:
 
-When asked to explore an idea without saving, finish with the useful choices and open questions.
+> ❓ **Q1 — Decision title**
+>
+> Ask the question.
+>
+> ➡️ Give your recommendation and why.
+
+Wait for the user's answers. Use them to update the tree and ask the next round. Hold questions whose answers depend on an unsettled decision. Look up facts available from files, tools, or documentation. When useful and available, use read-only subagents so independent questions can proceed while research is pending. The user makes the decisions.
+
+Probe assumptions, tradeoffs, and failure cases that could change the decision. Follow up on vague or conflicting answers. Stop when the user has resolved the material choices or explicitly deferred them. Summarize the agreed direction and use the relevant handoff to confirm it before taking action.
+
+- **During setup** — Preview one proposal with the workspace purpose, first capability, boundaries, acceptance criteria, and next step. Ask for one confirmation of the content and the save. Follow Setup's [first-proposal procedure](../setup/references/first-proposal.md) to save it. Implementation requires separate approval.
+- **During an existing improvement** — Reuse its record and relevant decisions. Once the user confirms the summary, return the agreed scope, acceptance criteria, and any explicitly deferred questions to the owning improvement.
+- **For a new workspace improvement** — Once the user confirms the summary, offer a handoff to system development. If the request is only to capture an idea, use its capture path directly without interviewing the user.
+
+For other topics, confirm the agreed direction and finish the brainstorm.

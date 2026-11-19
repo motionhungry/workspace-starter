@@ -1,6 +1,6 @@
 # Workspace operating instructions
 
-Work in this vault. Read the relevant skill and linked references for the current task. Use the assistant's local file and command tools and verify access before acting. Say what you inspected and flag any access or validation gaps.
+Work in this vault. Verify local file and command access before acting. Say what you inspected and flag any access or validation gaps.
 
 At session entry, inspect Git state and existing work. Preserve manual edits, untracked files, and existing configuration. Work with one active writer across copies. Establish where a change belongs and read its existing instructions before editing.
 
@@ -10,4 +10,4 @@ Use `00 Inbox/` for uncategorized captures. Use [System Development](90%20System
 
 Read the approved Git policy and portable choices in `90 System Development/workflow-settings.json`. Keep per-computer settings in `.agents/local.json`. After approval of a backup destination and policy, review explicit paths and checkpoint work at setup completion, proposal save, and meaningful stopping points. Confirm the pushed commit against the remote. If backup fails, retain the local commit and report pending backup. See the [Git checkpoint instructions](.agents/skills/setup/references/settings-and-backup.md).
 
-Skill definitions live in `.agents/skills/`. If discovery is unavailable, read the appropriate `SKILL.md` by path. Keep temporary test output outside the vault and retain meaningful evidence in the owning record. See the [tooling layout](.agents/README.md).
+Keep temporary test output outside the vault and retain meaningful evidence in the owning record. See the [tooling layout](.agents/README.md).

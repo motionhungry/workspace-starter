@@ -1,5 +1,5 @@
 ---
-id: IMP-0002
+id: DEV-0002
 type: improvement
 status: open
 created: 2026-11-19

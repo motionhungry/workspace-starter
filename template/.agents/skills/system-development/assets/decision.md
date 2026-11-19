@@ -5,7 +5,9 @@ status: proposed
 created: YYYY-MM-DD
 updated: YYYY-MM-DD
 ---
-# Decision title
+# Short summary of the decision
+
+<!-- Use the same summary in the filename after the ADR ID. -->
 
 ## Context
 
