@@ -2,7 +2,7 @@
 
 Open this folder as a vault in Obsidian. Put uncategorized notes in `00 Inbox/` and use [System Development](90%20System%20Development/README.md) to propose and develop new capabilities.
 
-To resume setup or open this workspace on another computer, use the start-or-resume prompt from Workspace Starter. If this workspace is already open in your assistant, ask it to read [AGENTS.md](AGENTS.md) and [.agents/skills/setup/SKILL.md](.agents/skills/setup/SKILL.md) and resume from the existing files and Git state.
+To resume setup or open this workspace on another computer, use the [Workspace Starter prompt](https://github.com/motionhungry/workspace-starter#start-or-resume-a-workspace). If this workspace is already open in your assistant, ask it to read [AGENTS.md](AGENTS.md) and [.agents/skills/setup/SKILL.md](.agents/skills/setup/SKILL.md) and resume from the existing files and Git state.
 
 ## Claude Code recovery
 
