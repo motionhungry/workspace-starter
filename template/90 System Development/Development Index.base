@@ -1,0 +1,60 @@
+filters:
+  and:
+    - file.ext == "md"
+    - file.hasProperty("id")
+formulas:
+  record: file.asLink()
+properties:
+  formula.record:
+    displayName: Record
+  note.status:
+    displayName: Status
+  note.parent:
+    displayName: Parent
+  note.updated:
+    displayName: Updated
+views:
+  - type: table
+    name: Open tickets
+    filters:
+      and:
+        - file.folder == "90 System Development/10 Improvements"
+        - note.type == "improvement"
+        - or:
+            - note.status == "open"
+            - note.status == "in-progress"
+    order:
+      - formula.record
+      - note.status
+      - note.parent
+      - note.updated
+    sort:
+      - property: note.updated
+        direction: DESC
+  - type: table
+    name: Awaiting validation
+    filters:
+      and:
+        - file.folder == "90 System Development/10 Improvements"
+        - note.type == "improvement"
+        - note.status == "validating"
+    order:
+      - formula.record
+      - note.parent
+      - note.updated
+    sort:
+      - property: note.updated
+        direction: DESC
+  - type: table
+    name: Accepted decisions
+    filters:
+      and:
+        - file.folder == "90 System Development/20 Decisions"
+        - note.type == "decision"
+        - note.status == "accepted"
+    order:
+      - formula.record
+      - note.updated
+    sort:
+      - property: note.updated
+        direction: DESC
