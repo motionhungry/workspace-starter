@@ -11,7 +11,15 @@ An Obsidian starter workspace for building and improving your workflows with AI.
 Workspace Starter is designed for macOS and Linux. To resume setup, open your existing workspace folder and paste the same prompt.
 
 ```text
-Help me start or resume a Workspace Starter vault. Confirm that you can access this folder and run local commands with Git 2.28+ and Python 3.9+. Check for an existing workspace and confirm the destination with me before writing. Resume an existing workspace in place. If I’m moving to a new computer, use the existing backup repository I confirm.
+Help me start or resume a Workspace Starter vault. Check that you can access this folder and run local commands with Git 2.28+ and Python 3.9+. Check for an existing workspace and confirm the destination with me before writing. Resume an existing workspace in place. If I’m moving to a new computer, use the existing backup repository I confirm.
+
+When the selected folder is empty and ready, ask “How would you like to set up ‘<folder name>’?” Use the actual folder name. Offer one choice question with these options in order:
+
+1. Start fresh (recommended)
+2. Restore from a backup
+3. Change folder
+
+Use the built-in choice picker only if it can show the options to me and receive my selection in this session. Otherwise show the numbered choices and say “Reply 1, 2, or 3.” Accept the option names or an equivalent plain-language reply. Start fresh confirms the named folder for a new workspace. Restore from a backup confirms the named folder and prompts for the backup repository URL if I haven’t already provided it. Confirm the URL with me before writing. If I choose Change folder, ask which folder to use and check it before offering the applicable setup choices. Keep the ready-folder reply to the question, choices, and how to answer. Explain the next step after I choose. If a check prevents setup, explain what I need to do in plain language.
 
 For a new workspace, check out https://github.com/motionhungry/workspace-starter in a temporary folder. Use the release tag I specify or the checkout’s default HEAD. Run the helper at template/.agents/skills/setup/scripts/workspace.py with bootstrap --source <starter-checkout> --destination <confirmed-folder>, using the actual quoted paths. Keep my workspace backup separate from the starter repository.
 
