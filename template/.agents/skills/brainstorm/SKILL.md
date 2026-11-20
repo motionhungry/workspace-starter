@@ -15,12 +15,12 @@ Work in rounds. Ask the whole **frontier**, the decisions whose prerequisites ar
 >
 > ➡️ Give your recommendation and why.
 
-Wait for the user's answers. Use them to update the tree and ask the next round. Hold questions whose answers depend on an unsettled decision. Look up facts available from files, tools, or documentation. When useful and available, use read-only subagents so independent questions can proceed while research is pending. The user makes the decisions.
+Wait for the user's response. Accept a free-form reply across multiple questions and use any examples or corrections to update the tree. Follow up on unresolved decisions in the next round. Hold questions whose answers depend on an unsettled decision. Look up facts available from files, tools, or documentation. When useful and available, use read-only subagents so independent questions can proceed while research is pending. The user makes the decisions.
 
-Probe assumptions, tradeoffs, and failure cases that could change the decision. Follow up on vague or conflicting answers. Stop when the user has resolved the material choices or explicitly deferred them. Summarize the agreed direction and use the relevant handoff to confirm it before taking action.
+Probe assumptions, tradeoffs, and failure cases that could change the decision. Follow up on vague or conflicting answers. Stop when the user has resolved the material choices or explicitly deferred them. Use the relevant handoff to summarize and confirm the agreed direction before taking action.
 
-- **During setup** — Preview one proposal with the workspace purpose, first capability, boundaries, acceptance criteria, and next step. Ask for one confirmation of the content and the save. Follow Setup's [first-proposal procedure](../setup/references/first-proposal.md) to save it. Implementation requires separate approval.
+- **During setup** — Return the agreed purpose, first capability, boundaries, acceptance criteria, and next step to [System Development](../system-development/SKILL.md) for the first proposal preview and save confirmation.
 - **During an existing improvement** — Reuse its record and relevant decisions. Once the user confirms the summary, return the agreed scope, acceptance criteria, and any explicitly deferred questions to the owning improvement.
 - **For a new workspace improvement** — Once the user confirms the summary, offer a handoff to system development. If the request is only to capture an idea, use its capture path directly without interviewing the user.
 
-For other topics, confirm the agreed direction and finish the brainstorm.
+For other topics, summarize and confirm the agreed direction and finish the brainstorm.
