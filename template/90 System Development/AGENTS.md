@@ -1,12 +1,12 @@
 # System Development Records
 
-Read these conventions when working on system development. Follow the workspace root's operating instructions and Git policy. The system-development skill owns the workflow.
+Read these conventions when working on system development. Follow the workspace root's operating instructions and Git policy. The system-development skill owns the workflow. See the [workspace glossary](../GLOSSARY.md) for the meaning of workspace improvement.
 
 ## Record locations
 
 - Keep one note per improvement in `10 Improvements/`, decision in `20 Decisions/`, or substantive session in `30 Journal/`.
-- Use independent numeric sequences for development tickets (`DEV-`), decisions (`ADR-`), and journals (`JRN-`). Use `<ID> - <short title>.md`. Setup reserves `DEV-0001.md` for the first workspace proposal. Check active and archived records before choosing the next number. Keep stable IDs and filenames, and retain archived records so their IDs remain issued. Coordinate across copies before allocating an ID.
-- Name each DEV ticket with a short summary of the work, such as `DEV-0002 - Verify backup after setup.md`. Use that summary as the note heading. For the reserved first proposal, put the summary in the heading.
+- Use independent numeric sequences for workspace improvements (`DEV-`), decisions (`ADR-`), and journals (`JRN-`). Use `<ID> - <short title>.md`. Setup reserves `DEV-0001.md` for the first workspace proposal. Check active and archived records before choosing the next number. Keep stable IDs and filenames, and retain archived records so their IDs remain issued. Coordinate across copies before allocating an ID.
+- Name each workspace improvement with a short summary of the work, such as `DEV-0002 - Verify backup after setup.md`. Use that summary as the note heading. For the reserved first proposal, put the summary in the heading.
 - Name each ADR for the choice it records, such as `ADR-0001 - Keep media outside the vault.md`. Track the decision's lifecycle in `status` and keep the filename stable as the status changes.
 - Link records with basename wikilinks, including an alias if helpful. Keep the archive flat and retain basenames on moves. Keep current accepted decisions active while they govern work. Closed improvements and superseded or rejected decisions can move to `99 Archive/` after recording their disposition and verifying their links. Reopening restores the active location, sets `status: open`, removes `closure_reason`, and records the reason. Preserve identity and creation date during moves and updates.
 - Store concise evidence in the owning improvement. Put any durable supporting brief in this visible development area and link it to its owner. Put disposable test output outside the workspace.
