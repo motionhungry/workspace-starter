@@ -187,6 +187,10 @@ class WorkspaceTests(unittest.TestCase):
         self.assertEqual(self.vault / UPDATE_SKILL.parent, link.resolve())
         definition = self.vault / UPDATE_SKILL
         self.assertIn("only when the operator explicitly asks", definition.read_text())
+        self.assertEqual(
+            (REPO / "template/.agents/skills/setup/assets/check-starter-updates.md").read_text(),
+            definition.read_text(),
+        )
         definition.write_text(definition.read_text() + "\nLocal instruction.\n")
         self.setup_tool("enable-updates")
         self.assertTrue(existing.is_dir())

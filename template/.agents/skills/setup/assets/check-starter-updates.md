@@ -11,3 +11,11 @@ Run only when the operator explicitly asks to check starter updates and `starter
 2. Read the current vault instructions, workflows and decisions related to the upstream changes. Explain what could help here, what this workspace already provides, and where upstream conflicts with chosen local behavior. Propose the smallest useful adaptations, keeping local paths, schemas and deliberate customizations intact. Avoid copying or merging the template into the workspace.
 3. Record the reviewed range, conclusions, and any adoption decisions in a development journal or linked owning record. Ask for agreement before saving an assistant-proposed improvement and use the separate implementation approval in system development. A completed review can record that an adoption decision is still pending.
 4. After completing the review and retaining its record, set `starter.last_reviewed_commit` to the exact reviewed commit. Set `starter.last_reviewed_tag` when applicable and clear a stale tag when the new reviewed commit has none. Preserve the original source and baseline. Checkpoint the reviewed settings and record under the vault's approved policy. The review checkpoint tracks consideration of upstream changes.
+
+## Close the review
+
+Lead with the most useful next step based on what changed upstream and what would help this workspace. Name the specific adaptation and briefly explain its benefit. Summarize other relevant changes that can wait. Keep the reviewed range, journal link, and checkpoint status brief.
+
+If an adaptation is worth pursuing, end by asking “Would you like me to save this as an improvement proposal?” An affirmative answer authorizes creating or updating the matching proposal through System Development. Share the saved proposal and ask separately whether to implement it. Refer to these records as improvement proposals when speaking to the operator.
+
+If the review is complete and no adaptation warrants action now, end with “No action needed.” If the review is blocked, state what is needed to continue.
