@@ -15,6 +15,12 @@ An explicit request to capture authorizes saving. Follow the workspace's capture
 
 On resumption, read the ticket, linked decisions, and relevant previous attempts. Reconcile interrupted work, local changes, and unpushed checkpoints before editing. Mark only work being actively undertaken as `in-progress`.
 
+## First improvement during setup
+
+Use the purpose gathered by Setup to start [Brainstorm](../brainstorm/SKILL.md). Before the first round, tell the operator: “Treat this like an interview. Talk through your thinking in your own words. Examples, digressions, and corrections are welcome. You can answer several questions together, and I’ll follow up where we need more detail.”
+
+Use the interview to identify one useful starting capability and agree on its boundaries, acceptance criteria, and next step. Preview one proposal that includes the workspace purpose and ask for one confirmation covering both the content and permission to save. Follow the [first-proposal procedure](../setup/references/first-proposal.md) to save and checkpoint it. Get separate approval before implementation.
+
 ## Develop
 
 1. Use the ticket as the working spec. Keep the proposed change, observable acceptance criteria, approval scope, results, and next step there. For larger changes, keep the shared design in a parent ticket and link child deliverables. Use [Brainstorm](../brainstorm/SKILL.md) for unresolved material choices. Obtain approval for implementation before acting on a capture or investigation request.
