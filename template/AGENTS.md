@@ -2,6 +2,8 @@
 
 Read `.agents/references/voice.md` when you start working in this vault for guidance on speaking with the operator.
 
+Consult the [workspace glossary](GLOSSARY.md) when local terminology matters. Add a short definition when the operator asks. Before suggesting a term, check existing guidance and identify a specific misunderstanding the definition would prevent in future work. Confirm the meaning and get the operator's approval before saving a suggested entry. Update the existing entry when the term or its meaning changes. Keep workflow rules in the instructions that govern them.
+
 Work in this vault. Verify local file and command access before acting. Say what you inspected and flag any access or validation gaps.
 
 At session entry, inspect Git state and existing work. Preserve manual edits, untracked files, and existing configuration. Work with one active writer across copies. Establish where a change belongs and read its existing instructions before editing.
