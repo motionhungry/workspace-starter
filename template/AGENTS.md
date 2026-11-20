@@ -1,6 +1,6 @@
 # Workspace operating instructions
 
-Read `.agents/voice.md` when you start working in this vault for guidance on speaking with the operator.
+Read `.agents/references/voice.md` when you start working in this vault for guidance on speaking with the operator.
 
 Work in this vault. Verify local file and command access before acting. Say what you inspected and flag any access or validation gaps.
 

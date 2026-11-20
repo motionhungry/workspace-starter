@@ -4,7 +4,7 @@ Open this folder as a vault in Obsidian. Put uncategorized notes in `00 Inbox/` 
 
 To resume setup or open this workspace on another computer, use the [Workspace Starter prompt](https://github.com/motionhungry/workspace-starter#getting-started). If the folder is already open in your assistant, ask it to resume workspace setup.
 
-Edit `.agents/voice.md` to change how your assistant speaks with you in this vault. You can edit it in a text editor or ask your assistant to update it.
+Edit `.agents/references/voice.md` to change how your assistant speaks with you in this vault. You can edit it in a text editor or ask your assistant to update it.
 
 ## Claude Code recovery
 

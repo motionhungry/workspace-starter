@@ -101,7 +101,7 @@ class WorkspaceTests(unittest.TestCase):
         self.assertFalse((self.vault / ".git").exists())
         self.assertTrue((self.vault / "00 Inbox").is_dir())
         self.assertFalse((self.vault / "CLAUDE.md").exists())
-        voice = Path(".agents/voice.md")
+        voice = Path(".agents/references/voice.md")
         self.assertEqual((self.source / "template" / voice).read_bytes(), (self.vault / voice).read_bytes())
         self.assertIn(voice.as_posix(), (self.vault / "AGENTS.md").read_text())
         self.records_tool("first", code=1)

@@ -13,7 +13,7 @@ Each operator should be able to tune the assistant's chat voice within a generat
 
 ## Choice and alternatives
 
-Keep the voice guidance in `.agents/voice.md` and reference it from the generated `AGENTS.md`. A visible vault note would be editable inside Obsidian. The tooling directory keeps agent guidance together. Client-specific prompt configuration could load the guidance before the first message and would require separate setup for each client.
+Keep the voice guidance in `.agents/references/voice.md` and reference it from the generated `AGENTS.md`. A visible vault note would be editable inside Obsidian. The tooling directory keeps agent guidance together. Client-specific prompt configuration could load the guidance before the first message and would require separate setup for each client.
 
 ## Consequences and revisit condition
 

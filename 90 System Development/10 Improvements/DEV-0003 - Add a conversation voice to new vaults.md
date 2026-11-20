@@ -17,13 +17,16 @@ Give each new vault a default conversation voice that its operator can edit, wit
 
 ## Proposed change
 
-Ship `.agents/voice.md` in the template. Add an explicit read instruction to the vault's `AGENTS.md`. Have the bootstrap prompt direct the assistant to the generated operating instructions, and tell operators where to edit the voice in the vault README. The wording follows the precise references and single-source guidance in Matt Pocock's [Writing for Agents](https://github.com/mattpocock/skills/blob/main/skills/productivity/writing-for-agents/SKILL.md).
+Ship `.agents/references/voice.md` in the template. Add an explicit read instruction to the vault's `AGENTS.md`. Have the bootstrap prompt direct the assistant to the generated operating instructions, and tell operators where to edit the voice in the vault README. The wording follows the precise references and single-source guidance in Matt Pocock's [Writing for Agents](https://github.com/mattpocock/skills/blob/main/skills/productivity/writing-for-agents/SKILL.md).
+
+Use the same shared-reference layout for future agent guidance. Present setup choices one at a time in plain language, and give instructions when the operator chooses a path that needs action. Keep the Obsidian check pending when it cannot run without opening the app.
 
 ## Acceptance criteria
 
-- Bootstrap from a committed template gives each new vault an editable `.agents/voice.md` and a startup instruction that references it.
+- Bootstrap from a committed template gives each new vault an editable `.agents/references/voice.md` and a startup instruction that references it.
 - The bootstrap prompt directs the assistant to the generated `AGENTS.md` before the setup skill, including when the chat started before the vault existed.
 - A fresh session in a generated fixture reads the voice file without the request naming it, gives a direct update, and follows a supplied template for a draft shown in chat.
+- Setup offers the next unresolved choice in plain language, including a way to defer backup. Opening Obsidian through desktop controls requires an operator request.
 
 ## Approval
 
@@ -34,6 +37,7 @@ The operator approved a trial of an editable voice file with a startup instructi
 - All four integration tests passed on macOS with Git 2.50.1 and Python 3.14.2. Bootstrap copied the guide and its pointer from a committed template. A separate two-vault check confirmed independent customization and that bootstrap refused to overwrite an existing vault.
 - The setup prompt directs the assistant to the generated `AGENTS.md` before the setup skill. In a fresh read-only Codex CLI 0.167.2 session in a generated fixture, the assistant read the voice guide without being prompted by name. It led its final reply with the result and open decision, then followed the draft template. Its first progress message preceded the guide read.
 - Claude Code 2.1.246 timed out during the conversational check. Its discovery adapter passed the integration tests. Conversational checks in Claude Code and ChatGPT Work are pending.
+- After moving the guide into shared references, the integration suite verified the new path. In a read-only Codex setup run in a generated vault, a request for the next choice yielded a short backup explanation, three options including deferral, and one question. The operator had already confirmed the vault was open. The create-repository and later setup turns still need an end-to-end check.
 
 ## Next step
 
