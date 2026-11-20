@@ -34,7 +34,7 @@ The operator approved adding picker guidance to the starter setup skill. The ope
 
 The integration suite passed on a generated workspace. The setup skill keeps both presentation paths and explicit backup confirmation.
 
-After updating the README, all four integration tests and development record validation passed. The integration tests cover workspace operations. A read-only Codex CLI 0.167.2 trial surfaced the write-access blocker. A writable noninteractive Codex trial waited for a picker selection with the fixture still empty, but its text output did not show the choices. Claude Code 2.1.246 print mode listed all three options and gave reply instructions, along with extra preflight and release details. The prompt now limits the ready-folder reply and requires that the session can display choices and receive a selection before using a picker.
+After updating the README, all four integration tests and development record validation passed. The integration tests cover workspace operations. A read-only Codex CLI 0.167.2 trial surfaced the write-access blocker. A writable noninteractive Codex trial waited for a picker selection with the fixture still empty, but its text output did not show the choices. Claude Code 2.1.246 print mode listed all three options and gave reply instructions, along with extra preflight and release details. The prompt now limits the ready-folder reply and requires that the session can display choices and receive a selection before using a picker. A second Claude Code trial gave the expected numbered choices and omitted release details, but still led with a preflight summary. The prompt now explicitly limits preflight reporting to blockers. Its effect and live picker rendering still need confirmation.
 
 ## Next step
 
