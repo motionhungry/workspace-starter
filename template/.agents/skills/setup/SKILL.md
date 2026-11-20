@@ -7,7 +7,9 @@ description: Set up Workspace Starter, resume incomplete setup, or open an exist
 
 Work from the vault root. Reuse existing choices and ask only about unresolved ones.
 
-Guide the operator through one choice at a time. Start with one sentence about what is ready, then use a short heading, plain-language options, and one question. Offer a recommended option and a way to defer when applicable. Give click-by-click instructions when the operator chooses an option that needs action. Keep commit IDs, remote names, branch names, and discovery details for troubleshooting or when the choice depends on them.
+Guide the operator through one choice at a time. Start with one sentence about what is ready, then ask one plain-language question. Give click-by-click instructions when the operator chooses an option that needs action. Keep commit IDs, remote names, branch names, and discovery details for troubleshooting or when the choice depends on them.
+
+For a decision with two or three clear options, use the session’s built-in choice picker when available. Otherwise, present a short numbered list in chat. Put the recommendation first and include **Decide later** when deferral is supported. Wait for the operator’s answer before acting on that choice. Confirm the actual backup destination and policy separately before the first backup.
 
 For backup, explain that a private online copy lets the operator recover the vault or use it on another computer. Offer to use an existing private repository, walk them through creating one, or continue with local work and set up backup later. For GitHub, after they choose to create one, guide them to **New repository**, choose **Private**, leave the initialization options unchecked, and ask them to share the repository link. Use the [backup instructions](references/settings-and-backup.md) to confirm the destination and settings. Present any technical settings that need approval as one recommended bundle and explain what it does.
 
