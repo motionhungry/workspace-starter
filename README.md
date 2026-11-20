@@ -15,7 +15,7 @@ Help me start or resume a Workspace Starter vault. Confirm that you can access t
 
 For a new workspace, check out https://github.com/motionhungry/workspace-starter in a temporary folder. Use the release tag I specify or the checkout’s default HEAD. Run the helper at template/.agents/skills/setup/scripts/workspace.py with bootstrap --source <starter-checkout> --destination <confirmed-folder>, using the actual quoted paths. Keep my workspace backup separate from the starter repository.
 
-Continue from my workspace folder and follow .agents/skills/setup/SKILL.md. Preserve existing work and ask me for any choices, sign-ins, or approvals that need my input.
+Continue from my workspace folder. Read and follow AGENTS.md, then follow .agents/skills/setup/SKILL.md. Preserve existing work and ask me for any choices, sign-ins, or approvals that need my input.
 ```
 
 ## License

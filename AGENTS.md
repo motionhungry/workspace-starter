@@ -6,6 +6,6 @@ Use the [system-development skill](template/.agents/skills/system-development/SK
 
 From the maintainer checkout, read distributable skills by their paths under `template/.agents/skills/`. Validate changes to discovery in a generated fixture.
 
-Develop on a branch. At a useful stopping point, review explicit paths and validate the change against its acceptance criteria before committing. Use a pull request for integration into main and a Git tag for the exact release commit. Record observed compatibility and outstanding checks in the owning improvement. Tag and publish only after the release decision.
+Develop on a branch. Give new branches short, descriptive kebab-case names with no tool prefix, such as `starter-conversation-voice`. At a useful stopping point, review explicit paths and validate the change against its acceptance criteria before committing. Use a pull request for integration into main and a Git tag for the exact release commit. Record observed compatibility and outstanding checks in the owning improvement. Tag and publish only after the release decision.
 
 Keep `template/.agents/` limited to operating instructions and active skill machinery. Preserve user edits and record any schema or workflow changes in the owning improvement.
