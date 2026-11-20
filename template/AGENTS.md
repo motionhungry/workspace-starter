@@ -1,5 +1,7 @@
 # Workspace operating instructions
 
+Read `.agents/voice.md` when you start working in this vault for guidance on speaking with the operator.
+
 Work in this vault. Verify local file and command access before acting. Say what you inspected and flag any access or validation gaps.
 
 At session entry, inspect Git state and existing work. Preserve manual edits, untracked files, and existing configuration. Work with one active writer across copies. Establish where a change belongs and read its existing instructions before editing.
