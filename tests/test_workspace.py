@@ -24,6 +24,7 @@ class WorkspaceTests(unittest.TestCase):
         temp = TemporaryDirectory()
         self.addCleanup(temp.cleanup)
         self.root = Path(temp.name).resolve()
+        self.global_config = self.root / "gitconfig"
         self.source = self.root / "starter"
         self.source.mkdir()
         self.vault = self.root / "A new vault"
@@ -41,7 +42,7 @@ class WorkspaceTests(unittest.TestCase):
 
     def run_command(self, root, *args, code=0):
         env = {key: value for key, value in os.environ.items() if not key.startswith("GIT_")}
-        env.update(GIT_CONFIG_NOSYSTEM="1", GIT_CONFIG_GLOBAL=os.devnull, GIT_TERMINAL_PROMPT="0")
+        env.update(GIT_CONFIG_NOSYSTEM="1", GIT_CONFIG_GLOBAL=str(self.global_config), GIT_TERMINAL_PROMPT="0")
         result = subprocess.run(args, cwd=root, env=env, capture_output=True, text=True)
         self.assertEqual(result.returncode, code, result.stdout + result.stderr)
         return result.stdout.strip() if code == 0 else result.stderr.strip()
@@ -53,11 +54,15 @@ class WorkspaceTests(unittest.TestCase):
         self.git(root, "config", "--local", "user.name", "Test Operator")
         self.git(root, "config", "--local", "user.email", "operator@example.invalid")
 
-    def bootstrap(self, destination=None, code=0):
+    def bootstrap(self, destination=None, code=0, *, explicit_identity=True):
         target = destination if destination is not None else self.vault
+        identity = (
+            ("--author-name", "Test Operator", "--author-email", "operator@example.invalid")
+            if explicit_identity else ()
+        )
         return self.run_command(
             self.root, sys.executable, str(self.source / "template" / WORKSPACE),
-            "bootstrap", "--source", str(self.source), "--destination", str(target), code=code,
+            "bootstrap", "--source", str(self.source), "--destination", str(target), *identity, code=code,
         )
 
     def setup_tool(self, *args, code=0):
@@ -78,16 +83,6 @@ class WorkspaceTests(unittest.TestCase):
             "remote": "origin", "branch": "main", "policy": "commit-and-push", "url": url,
         }))
 
-    def first_checkpoint(self):
-        self.git(self.vault, "init", "-b", "main")
-        self.identity(self.vault)
-        self.configure_backup(str(self.backup))
-        paths = sorted(
-            str(path.relative_to(self.vault)) for path in self.vault.rglob("*")
-            if path.is_file() and ".git" not in path.relative_to(self.vault).parts
-        )
-        return self.setup_tool("checkpoint", "--message", "Save setup", "--", *paths, code=1)
-
     def test_clean_setup_resumption_and_backup_retry(self):
         self.vault.mkdir()
         self.bootstrap()
@@ -98,21 +93,25 @@ class WorkspaceTests(unittest.TestCase):
             "original_commit": source_commit,
             "original_tag": "v1.0.0",
         })
-        self.assertFalse((self.vault / ".git").exists())
+        baseline = self.git(self.vault, "rev-parse", "HEAD")
+        self.assertNotEqual(source_commit, baseline)
+        self.assertEqual("1", self.git(self.vault, "rev-list", "--count", "HEAD"))
+        self.assertEqual("", self.git(self.vault, "remote"))
+        self.assertEqual("", self.git(self.vault, "status", "--short"))
         self.assertTrue((self.vault / "00 Inbox").is_dir())
+        self.assertTrue((self.vault / "90 System Development/10 Improvements").is_dir())
+        self.assertIn("10 Publishing/20 Review/", (self.vault / "README.md").read_text())
+        self.assertIn("README.md#folder-order", (self.vault / "AGENTS.md").read_text())
         self.assertFalse((self.vault / "CLAUDE.md").exists())
         voice = Path(".agents/references/voice.md")
         self.assertEqual((self.source / "template" / voice).read_bytes(), (self.vault / voice).read_bytes())
         self.assertIn(voice.as_posix(), (self.vault / "AGENTS.md").read_text())
         self.records_tool("first", code=1)
         self.assertIn("existing files", self.bootstrap(code=1))
-        self.assertIn("Backup pending", self.first_checkpoint())
-        initial = self.git(self.vault, "rev-parse", "HEAD")
-        self.assertNotEqual(source_commit, initial)
-        self.assertEqual("1", self.git(self.vault, "rev-list", "--count", "HEAD"))
-        self.git(self.root, "init", "--bare", "-b", "main", str(self.backup))
-        self.assertIn(initial, self.setup_tool("checkpoint"))
-        self.assertEqual(initial, self.git(self.backup, "rev-parse", "main"))
+        self.change_settings(lambda data: data["starter"].update(update_review="declined"))
+        self.assertIn("Saved local checkpoint", self.setup_tool(
+            "checkpoint", "--message", "Save setup", "--", str(SETTINGS),
+        ))
 
         draft = self.root / "Approved draft.md"
         draft.write_text(
@@ -136,7 +135,17 @@ class WorkspaceTests(unittest.TestCase):
         arguments = ("checkpoint", "--message", "Save first proposal", "--", str(FIRST))
         self.assertIn("Unrelated staged work", self.setup_tool(*arguments, code=1))
         self.git(self.vault, "reset", "HEAD", "--", str(manual.relative_to(self.vault)))
-        self.setup_tool(*arguments)
+        self.assertIn("Saved local checkpoint", self.setup_tool(*arguments))
+        self.assertEqual("3", self.git(self.vault, "rev-list", "--count", "HEAD"))
+        self.assertEqual("", self.git(self.vault, "remote"))
+        self.configure_backup(str(self.backup))
+        self.assertIn("Backup pending", self.setup_tool(
+            "checkpoint", "--message", "Enable backup", "--", str(SETTINGS), code=1,
+        ))
+        head = self.git(self.vault, "rev-parse", "HEAD")
+        self.git(self.root, "init", "--bare", "-b", "main", str(self.backup))
+        self.assertIn(head, self.setup_tool("checkpoint"))
+        self.assertEqual(head, self.git(self.backup, "rev-parse", "main"))
         self.assertEqual("Keep this unrelated note.\n", manual.read_text())
         self.assertIn("?? ", self.git(self.vault, "status", "--short"))
         clone = self.root / "Fresh copy"
@@ -148,6 +157,19 @@ class WorkspaceTests(unittest.TestCase):
         self.git(self.vault, "mv", "README.md", "Moved.md")
         error = self.setup_tool("checkpoint", "--message", "Incomplete rename", "--", "Moved.md", code=1)
         self.assertIn("Unrelated staged work", error)
+
+    def test_bootstrap_identity(self):
+        self.vault.mkdir()
+        self.assertIn("Git needs an author name and email", self.bootstrap(code=1, explicit_identity=False))
+        self.assertEqual([], list(self.vault.iterdir()))
+
+        self.git(self.root, "config", "--file", str(self.global_config), "user.name", "Configured Operator")
+        self.git(self.root, "config", "--file", str(self.global_config), "user.email", "configured@example.invalid")
+        self.bootstrap(explicit_identity=False)
+        self.assertEqual(
+            "Configured Operator <configured@example.invalid>",
+            self.git(self.vault, "log", "-1", "--format=%an <%ae>"),
+        )
 
     def test_decline_then_enable_updates_and_preserve_adapters(self):
         self.bootstrap()
@@ -172,7 +194,6 @@ class WorkspaceTests(unittest.TestCase):
 
     def test_media_is_local_and_missing_folder_stays_pending(self):
         self.bootstrap()
-        self.git(self.vault, "init", "-b", "main")
         media = self.root / "Media folder"
         self.change_settings(lambda data: data.update(media={"kind": "local"}))
         self.setup_tool("local-media", "--folder", str(media), code=1)
@@ -187,13 +208,14 @@ class WorkspaceTests(unittest.TestCase):
     def test_source_remote_and_nested_destination_are_rejected(self):
         self.assertIn("outside existing Git repositories", self.bootstrap(self.source / "nested", code=1))
         self.bootstrap()
-        self.git(self.vault, "init", "-b", "main")
-        self.identity(self.vault)
         for url in ("git@github.com:Example/Workspace-Starter.git", "ssh://git@ssh.github.com:443/example/workspace-starter.git"):
             with self.subTest(url=url):
                 self.configure_backup(url)
-                error = self.setup_tool("checkpoint", "--message", "Wrong remote", "--", "AGENTS.md", code=1)
+                error = self.setup_tool("checkpoint", "--message", "Save settings locally", "--", str(SETTINGS), code=1)
                 self.assertIn("independent of the starter source", error)
+                self.assertIn("Backup pending", error)
+                self.assertEqual((self.vault / SETTINGS).read_text().strip(),
+                                 self.git(self.vault, "show", f"HEAD:{SETTINGS}"))
                 self.git(self.vault, "remote", "remove", "origin")
         self.assertEqual("", self.git(self.vault, "diff", "--cached", "--name-only"))
 

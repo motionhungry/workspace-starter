@@ -12,4 +12,4 @@ When the operator approves the first proposal and authorizes saving it, fill the
 python3 .agents/skills/system-development/scripts/records.py save-first --draft "<draft-path>"
 ```
 
-The helper validates the draft and saves it without replacing an existing proposal. Read the saved note and return its workspace-relative path. Checkpoint it under the approved backup policy. If backup is pending, preserve the proposal and report its actual backup status.
+The helper validates the draft and saves it without replacing an existing proposal. Read the saved note and return its workspace-relative path. Commit it locally and push if backup is approved. If backup is pending, preserve the proposal and report its actual backup status.

@@ -66,7 +66,11 @@ def repo_key(url, root):
     return (host, path.lower() if host == "github.com" else path)
 
 
-def bootstrap(source, destination):
+def bootstrap(source, destination, author_name, author_email):
+    if (author_name is not None or author_email is not None) and not (
+        author_name and author_name.strip() and author_email and author_email.strip()
+    ):
+        raise WorkspaceError("Provide both a Git author name and email.")
     source = source.resolve()
     destination = destination.expanduser().absolute()
     if destination.is_symlink():
@@ -96,6 +100,7 @@ def bootstrap(source, destination):
     with tempfile.TemporaryDirectory(prefix=".workspace-starter-", dir=destination.parent) as staging:
         vault = Path(staging) / "vault"
         vault.mkdir()
+        baseline_paths = []
         with tarfile.open(fileobj=io.BytesIO(archive.stdout), mode="r:") as payload:
             for entry in payload:
                 path = vault / entry.name
@@ -104,12 +109,25 @@ def bootstrap(source, destination):
                 if entry.isdir():
                     path.mkdir(parents=True, exist_ok=True)
                 else:
+                    baseline_paths.append(entry.name)
                     path.parent.mkdir(parents=True, exist_ok=True)
                     with path.open("xb") as output:
                         output.write(payload.extractfile(entry).read())
         with (vault / SETTINGS).open("x", encoding="utf-8") as output:
             json.dump({"schema_version": 1, "starter": starter}, output, indent=2)
             output.write("\n")
+        git(vault, "init", "-b", "main")
+        if author_name is not None:
+            git(vault, "config", "--local", "user.name", author_name)
+            git(vault, "config", "--local", "user.email", author_email)
+        for identity in ("GIT_AUTHOR_IDENT", "GIT_COMMITTER_IDENT"):
+            if git(vault, "-c", "user.useConfigOnly=true", "var", identity, check=False).returncode:
+                raise WorkspaceError(
+                    "Git needs an author name and email. Retry bootstrap with "
+                    "--author-name and --author-email to set them for this vault."
+                )
+        git(vault, "--literal-pathspecs", "add", "-f", "--", *baseline_paths, str(SETTINGS))
+        git(vault, "-c", "user.useConfigOnly=true", "commit", "-m", "Create workspace from starter")
         vault.rename(destination)
     print(f"Created workspace at {destination}")
 
@@ -230,8 +248,6 @@ def verify_local_media(root, folder):
 
 
 def backup_target(root, data):
-    if git_root(root) != root:
-        raise WorkspaceError("Run from the generated workspace's own Git root.")
     backup = data.get("backup")
     if not isinstance(backup, dict) or backup.get("policy") != "commit-and-push":
         raise WorkspaceError("Confirm the backup destination and checkpoint policy first.")
@@ -278,7 +294,8 @@ def validate_paths(root, paths):
 
 def checkpoint(root, message, paths):
     data = settings(root)
-    remote, ref = backup_target(root, data)
+    if git_root(root) != root:
+        raise WorkspaceError("Run from the generated workspace's own Git root.")
     operations = ("MERGE_HEAD", "CHERRY_PICK_HEAD", "REVERT_HEAD", "rebase-merge", "rebase-apply", "sequencer")
     git_paths = git(root, "rev-parse", *(arg for name in operations for arg in ("--git-path", name)))
     if any((root / path).exists() for path in git_paths.stdout.splitlines()):
@@ -298,7 +315,11 @@ def checkpoint(root, message, paths):
     elif message is not None:
         raise WorkspaceError("List reviewed files with the commit message, or omit both to retry backup.")
     head = git(root, "rev-parse", "HEAD").stdout.strip()
+    if "backup" not in data:
+        print(f"Saved local checkpoint {head}")
+        return
     try:
+        remote, ref = backup_target(root, data)
         git(root, "-c", "push.followTags=false", "push", "--recurse-submodules=no", "--", remote, f"{head}:{ref}")
         observed = git(root, "ls-remote", "--exit-code", "--refs", "--", remote, ref).stdout.strip()
         if observed != f"{head}\t{ref}":
@@ -314,6 +335,8 @@ def main():
     create = commands.add_parser("bootstrap")
     create.add_argument("--source", type=Path, required=True)
     create.add_argument("--destination", type=Path, required=True)
+    create.add_argument("--author-name")
+    create.add_argument("--author-email")
     adapter = commands.add_parser("discovery")
     adapter.add_argument("--per-skill", action="store_true")
     commands.add_parser("enable-updates")
@@ -326,7 +349,7 @@ def main():
     root = Path.cwd()
     try:
         if args.command == "bootstrap":
-            bootstrap(args.source, args.destination)
+            bootstrap(args.source, args.destination, args.author_name, args.author_email)
         elif args.command == "discovery":
             discovery(root, args.per_skill)
         elif args.command == "enable-updates":
