@@ -1,9 +1,7 @@
 ---
 name: setup
-description: Set up Workspace Starter, resume incomplete setup, or open an existing vault on a new computer.
+description: Set up an Obsidian vault, resume incomplete setup, or open an existing vault on a new computer.
 ---
-
-# Set up or resume the workspace
 
 Work from the vault root. Reuse existing choices and ask only about unresolved ones.
 

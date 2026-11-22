@@ -1,26 +1,28 @@
 ---
 name: brainstorm
-description: Brainstorm or stress-test a plan, decision, or idea through rounds of questions and recommendations. Use during workspace setup to clarify the purpose and first useful capability, or during system development to resolve design choices.
+description: Probe the user relentlessly about a plan, decision, or idea. Use when the user wants to stress-test their thinking, or uses any 'brainstorm' trigger phrases.
 ---
 
-# Brainstorm
+Interview the user relentlessly until you reach a shared understanding. Map the decisions as a **design tree** where each decision opens the questions that hang off it. Start from the user's intended outcome and use only the local context needed to resolve the choices at hand.
 
-Interview the user until you reach a shared understanding. Map the decisions as a **design tree** where each decision opens the questions that depend on it. Start from the user's intended outcome and use only the local context needed to resolve the choices at hand.
+Work the tree in **rounds**. The **frontier** is every decision whose prerequisites are already settled: the questions you can ask _now_ without guessing at answers you haven't heard yet. Ask the whole frontier in one round: number each question and give your recommended answer. Then wait for the user's answers before the next round.
 
-Work in rounds. Ask the whole **frontier**, the decisions whose prerequisites are settled. Number each question and give your recommended answer with a brief reason. Use this format:
+Format a round like so:
 
-> ❓ **Q1 — Decision title**
->
-> Ask the question.
->
-> ➡️ Give your recommendation and why.
+```
+❓ **Q1** - **<question title>**: <question body, might be multiple paragraphs, including multiple choices>
 
-Wait for the user's response. Accept a free-form reply across multiple questions and use any examples or corrections to update the tree. Follow up on unresolved decisions in the next round. Hold questions whose answers depend on an unsettled decision. Look up facts available from files, tools, or documentation. When useful and available, use read-only subagents so independent questions can proceed while research is pending. The user makes the decisions.
+➡️ <your recommended answer>
 
-Probe assumptions, tradeoffs, and failure cases that could change the decision. Follow up on vague or conflicting answers. Stop when the user has resolved the material choices or explicitly deferred them. Use the relevant handoff to summarize and confirm the agreed direction before taking action.
+---
 
-- **During setup** — Return the agreed purpose, first capability, boundaries, acceptance criteria, and next step to [System Development](../system-development/SKILL.md) for the first proposal preview and save confirmation.
-- **During an existing improvement** — Reuse its record and relevant decisions. Once the user confirms the summary, return the agreed scope, acceptance criteria, and any explicitly deferred questions to the owning improvement.
-- **For a new workspace improvement** — Once the user confirms the summary, offer a handoff to system development. If the request is only to capture an idea, use its capture path directly without interviewing the user.
+❓ **Q2** - **<question title>**: <question body, might be multiple paragraphs, including multiple choices>
 
-For other topics, summarize and confirm the agreed direction and finish the brainstorm.
+➡️ <your recommended answer>
+```
+
+Each round the user answers reshapes the tree: settled decisions push the frontier outward and unblock questions that depended on them. Accept free-form answers, examples, and corrections. Recompute the frontier and ask the next round. A question whose answer depends on another question still open in this round belongs to a _later_ round, not this one.
+
+Finding _facts_ is your job. Delegate independent lookups to read-only subagents when available and useful. Otherwise, check the relevant files, tools, or documentation directly. While research is pending, hold the questions that depend on it and ask the rest of the frontier. State what remains unknown if you cannot verify a fact. The _decisions_ are the user's.
+
+When the material decisions are settled or explicitly deferred, summarize the agreed direction and deferred questions. For a standalone interview, show the summary in chat and ask the user to confirm it. If another workflow started the interview, return the summary for that workflow to present and confirm with the user. Wait for confirmation before acting on the decisions.

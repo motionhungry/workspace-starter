@@ -1,6 +1,6 @@
 ---
 name: system-development
-description: Capture, resume, implement, validate or review improvements to skills, instructions, note structures and workflows in the current workspace. Use after brainstorming when saving an agreed improvement proposal.
+description: Capture, resume, implement, validate or review improvements to skills, instructions, note structures and workflows in the current workspace. Use when turning a brainstorm into a workspace improvement proposal.
 ---
 
 # System Development
@@ -11,19 +11,23 @@ Use the record conventions in `90 System Development/AGENTS.md` and the active r
 
 Search current tickets and relevant archive entries for a match. Update a matching ticket with new evidence. If a closed issue recurs, reopen it and record why. Link a new ticket when the problem is materially different.
 
-An explicit request to capture authorizes saving. Follow the workspace's capture policy for assistant-discovered ideas. Record the source, known problem, evidence, known outcome, and next step. Label inferences and leave open design questions for later. Give the user the saved ID and path.
+Use capture directly when the user asks to record an idea. An explicit request to capture authorizes saving. Follow the workspace's capture policy for assistant-discovered ideas. Record the source, known problem, evidence, known outcome, and next step. Label inferences and leave open design questions for later. Give the user the saved ID and path.
 
 On resumption, read the ticket, linked decisions, and relevant previous attempts. Reconcile interrupted work, local changes, and unpushed checkpoints before editing. Mark only work being actively undertaken as `in-progress`.
+
+## New proposal after brainstorming
+
+When the user wants to turn a standalone brainstorm into a workspace proposal, check for a matching improvement first. Reuse the agreed direction, scope, acceptance criteria, next step, and deferred questions. Clarify gaps that affect the proposal. Preview the proposal and follow the workspace's capture policy for permission to save it. Get separate approval before implementation.
 
 ## First improvement during setup
 
 Use the purpose gathered by Setup to start [Brainstorm](../brainstorm/SKILL.md). Before the first round, tell the operator: “Treat this like an interview. Talk through your thinking in your own words. Examples, digressions, and corrections are welcome. You can answer several questions together, and I’ll follow up where we need more detail.”
 
-Use the interview to identify one useful starting capability and agree on its boundaries, acceptance criteria, and next step. Preview one proposal that includes the workspace purpose and ask for one confirmation covering both the content and permission to save. Follow the [first-proposal procedure](../setup/references/first-proposal.md) to save and checkpoint it. Get separate approval before implementation.
+Use the interview to identify one useful starting capability and agree on its boundaries, acceptance criteria, and next step. Present the interview summary as one proposal that includes the workspace purpose. Ask for one confirmation covering the interview outcome and permission to save the proposal. Follow the [first-proposal procedure](../setup/references/first-proposal.md) to save and checkpoint it. Get separate approval before implementation.
 
 ## Develop
 
-1. Use the ticket as the working spec. Keep the proposed change, observable acceptance criteria, approval scope, results, and next step there. For larger changes, keep the shared design in a parent ticket and link child deliverables. Use [Brainstorm](../brainstorm/SKILL.md) for unresolved material choices. Obtain approval for implementation before acting on a capture or investigation request.
+1. Use the ticket as the working spec. Keep the proposed change, observable acceptance criteria, approval scope, results, and next step there. For larger changes, keep the shared design in a parent ticket and link child deliverables. For unresolved material choices, start [Brainstorm](../brainstorm/SKILL.md) with the ticket and relevant decisions. Record the confirmed scope, acceptance criteria, and explicitly deferred questions in the ticket. Obtain approval for implementation before acting on a capture or investigation request.
 2. Recommend a custom subagent when a repeatable, independently delegable job has a clear input and output and benefits from a distinct perspective, tool access, or reasoning depth. Use [Skill Creator](../skill-creator/SKILL.md) for reusable local skills. Consult the [frontmatter guidance](references/frontmatter.md) when defining a note type or changing its fields.
 3. For a lasting choice with consequential alternatives or a changed convention, link a decision record with the tradeoffs, consequences, approval, and when to revisit it. Put the current rule in the applicable instructions or skill.
    When adding or moving agent guidance, follow the [workspace tooling layout](../../README.md). Check for an existing source and verify the instruction that points to it.
