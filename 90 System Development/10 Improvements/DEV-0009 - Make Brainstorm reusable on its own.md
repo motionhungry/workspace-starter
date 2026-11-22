@@ -28,13 +28,15 @@ Define a generic interview close, allow direct fact-finding, and let calling wor
 
 ## Approval
 
-On 2026-11-22 the operator requested implementation of the reviewed changes through System Development.
+On 2026-11-22 the operator requested implementation of the reviewed changes through System Development. The operator also approved the follow-up edit to the Setup description and heading.
 
 ## Validation
 
 All five integration tests passed on macOS 26.7 with Git 2.50.1 and Python 3.14.2. A generated vault contained the revised skills, resolved the Setup and Skill Creator links, and resolved both Claude discovery adapters to the canonical skills. Maintainer record validation passed.
 
 In read-only Codex CLI 0.167.2 trials, a skill-only workspace looked up a local fact directly, retained deferred questions, and asked for confirmation in chat. A generated vault used the workspace purpose to open the first Brainstorm round. A separate setup trial previewed one proposal with a combined confirmation and separate implementation approval. A new-proposal trial reused a standalone brainstorm and requested permission to save. The generated vault stayed clean.
+
+After the Setup description and heading edit, all five integration tests passed again. Both Claude discovery adapters resolved to the revised skill in a generated vault. In fresh Codex CLI 0.167.2 sessions, a request to resume an Obsidian vault selected Setup and a Python virtual environment request skipped it.
 
 Reviewed the explicit capture path and existing-improvement handoff against the acceptance criteria. Live writes through those paths, a complete interactive setup session, and Claude Code invocation remain unverified.
 
